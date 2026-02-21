@@ -1,0 +1,64 @@
+baseURL: "https://vision.powertrader.es/"
+languageCode: "es"
+title: "PowerTrader Vision"
+theme: "PaperMod"
+pagination:
+  pagerSize: 10
+
+params:
+  env: production
+  author: PowerTrader
+  description: "Análisis y visión estratégica del mercado energético."
+  keywords: [PowerTrader, mercado eléctrico, análisis, energía]
+  defaultTheme: dark
+  ShowReadingTime: true
+  ShowShareButtons: true
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true
+  ShowToc: true
+  TocOpen: false
+
+  homeInfoParams:
+    Title: "⚡ PowerTrader Vision"
+    Content: >
+      Visión estratégica y análisis del mercado eléctrico.
+      Tendencias, previsiones y oportunidades de inversión energética.
+
+  socialIcons:
+    - name: twitter
+      url: "https://twitter.com/"
+    - name: github
+      url: "https://github.com/"
+    - name: rss
+      url: "/index.xml"
+
+  cover:
+    hidden: false
+    hiddenInList: false
+    hiddenInSingle: false
+
+menu:
+  main:
+    - identifier: inicio
+      name: Inicio
+      url: /
+      weight: 10
+    - identifier: articulos
+      name: Artículos
+      url: /posts/
+      weight: 20
+    - identifier: sobre
+      name: Sobre
+      url: /about/
+      weight: 30
+    - identifier: buscar
+      name: 🔍
+      url: /search/
+      weight: 40
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
