@@ -64,9 +64,3 @@ outputs:
     - RSS
     - JSON
 
-    # Añadir al final del archivo hugo.toml
-[[menu.main]]
-    identifier = "universe"
-    name = "⮌ Volver a PowerTrader"
-    url = "https://powertrader.es"
-    weight = 10
