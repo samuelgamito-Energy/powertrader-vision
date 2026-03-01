@@ -39,6 +39,10 @@ params:
 
 menu:
   main:
+    - identifier: "powertrader"
+      name: "↩ Volver a PowerTrader"
+      url: "https://powertrader.es/"
+      weight: 1
     - identifier: inicio
       name: Inicio
       url: /
