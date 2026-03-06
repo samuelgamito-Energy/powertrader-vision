@@ -10,6 +10,7 @@ params:
   assets:
     favicon: /favicon.svg
   label:
+    text: " "
     icon: /logo.svg
     iconHeight: 80
   env: production
