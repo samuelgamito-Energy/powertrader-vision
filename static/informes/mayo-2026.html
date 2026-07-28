@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Informe Mensual Energético — MAYO 2026</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains&#43;Mono:wght@400;600&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <style>
+        :root {
+            --bg: #080c14;
+            --surface: #0d1420;
+            --surface2: #111927;
+            --border: rgba(255, 255, 255, 0.07);
+            --accent: #00d4ff;
+            --accent2: #7c3aed;
+            --accent3: #10b981;
+            --accent4: #f59e0b;
+            --accent5: #ef4444;
+            --text: #e2e8f0;
+            --text-dim: #64748b;
+            --text-muted: #94a3b8;
+            --card-glow: 0 0 30px rgba(0, 212, 255, 0.06);
+            --radius: 16px;
+            --radius-sm: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+         
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+         
+        header {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, #060b18 0%, #0d1a2e 50%, #060b18 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 48px 60px 40px;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .header-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 18px;
+        }
+
+        .header-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.4;
+                transform: scale(1.3);
+            }
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #ffffff 0%, #94c7ff 50%, #00d4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .header-meta {
+            margin-top: 24px;
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .meta-pill {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .meta-pill span {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+         
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 48px 80px;
+        }
+
+         
+        .section-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, rgba(0, 212, 255, 0.3), transparent);
+        }
+
+        h2 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .section-head {
+            margin-bottom: 28px;
+        }
+
+        .section-head p {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+         
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+
+        .kpi-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px 24px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--kpi-color, var(--accent));
+            opacity: 0.7;
+        }
+
+        .kpi-card::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, var(--kpi-color, var(--accent)) 0%, transparent 70%);
+            opacity: 0.05;
+        }
+
+        .kpi-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 800;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--kpi-color, var(--accent));
+            line-height: 1;
+        }
+
+        .kpi-unit {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .kpi-trend {
+            margin-top: 12px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-dim);
+        }
+
+        .kpi-trend.up {
+            color: var(--accent3);
+        }
+
+        .kpi-trend.down {
+            color: var(--accent5);
+        }
+
+        .kpi-trend.neutral {
+            color: var(--text-dim);
+        }
+
+         
+        .chart-grid {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .chart-grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .chart-grid-3 {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .chart-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--card-glow);
+            transition: border-color 0.2s;
+        }
+
+        .chart-card:hover {
+            border-color: rgba(0, 212, 255, 0.15);
+        }
+
+        .chart-card.full {
+            grid-column: 1 / -1;
+        }
+
+        .chart-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .chart-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .chart-subtitle {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 2px;
+        }
+
+        .chart-badge {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            background: rgba(0, 212, 255, 0.08);
+            color: var(--accent);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            white-space: nowrap;
+        }
+
+        .chart-wrapper {
+            position: relative;
+        }
+
+         
+        .mix-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px;
+            margin-bottom: 48px;
+        }
+
+        .mix-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mix-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--src-color);
+        }
+
+        .mix-src {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .mix-total {
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text);
+        }
+
+        .mix-unit {
+            font-size: 11px;
+            color: var(--text-dim);
+        }
+
+        .mix-pct {
+            margin-top: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--src-color);
+        }
+
+        .mix-bar-bg {
+            margin-top: 10px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+        }
+
+        .mix-bar {
+            height: 4px;
+            border-radius: 2px;
+            background: var(--src-color);
+            transition: width 1s ease;
+        }
+
+         
+        .table-wrap {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            margin-bottom: 48px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        thead tr {
+            background: rgba(0, 212, 255, 0.05);
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            padding: 12px 14px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--text-dim);
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            text-align: left;
+        }
+
+        td {
+            padding: 10px 14px;
+            text-align: right;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        td:first-child {
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .td-positive {
+            color: var(--accent3) !important;
+        }
+
+        .td-negative {
+            color: var(--accent5) !important;
+        }
+
+         
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+            margin-bottom: 48px;
+        }
+
+        .insight-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+        }
+
+        .insight-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+        }
+
+        .insight-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .insight-text {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .insight-tag {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .tag-green {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent3);
+        }
+
+        .tag-yellow {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent4);
+        }
+
+        .tag-red {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--accent5);
+        }
+
+        .tag-blue {
+            background: rgba(0, 212, 255, 0.10);
+            color: var(--accent);
+        }
+
+         
+        footer {
+            position: relative;
+            z-index: 1;
+            border-top: 1px solid var(--border);
+            padding: 24px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        .footer-logo {
+            font-size: 14px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        @media (max-width: 900px) {
+            header {
+                padding: 32px 24px;
+            }
+
+            main {
+                padding: 24px 20px 60px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .chart-grid-2,
+            .chart-grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    
+    <header>
+        <div class="header-inner">
+            <div class="header-badge">⚡ Power Trader · EnergyVision</div>
+            <h1>Informe Energético<br>
+                MAYO                2026            </h1>
+            <p class="header-subtitle">Análisis de mercado eléctrico peninsular español · Datos mensuales automáticos
+            </p>
+            <div class="header-meta">
+                <div class="meta-pill">📅 Período: <span>01 MAY – 31 MAY 2026</span></div>
+                <div class="meta-pill">📊 Registros: <span>
+                        31 días
+                    </span></div>
+                <div class="meta-pill">🔌 Fuente: <span>OMIE / REE</span></div>
+                <div class="meta-pill">📈 Actualizado: <span>
+                        01 jun 2026                    </span></div>
+            </div>
+        </div>
+    </header>
+
+    
+    <main>
+
+        
+        <div class="section-title">Indicadores Clave del Período</div>
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Precios de Mercado</div>
+            <h2>Evolución OMIE Spot &amp; PVPC</h2>
+            <p>Variación diaria del precio en el mercado mayorista (OMIE) y precio regulado (PVPC) durante el mes</p>
+        </div>
+        <div class="chart-grid" style="margin-bottom:32px;">
+            <div class="chart-card full">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Precios Diarios — OMIE Spot vs PVPC</div>
+                        <div class="chart-subtitle">€/MWh · Valores diarios</div>
+                    </div>
+                    <div class="chart-badge">€/MWh</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartPrecios" height="90"></canvas></div>
+            </div>
+        </div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Demanda &amp; Balances</div>
+            <h2>Demanda y Saldos de Red</h2>
+            <p>Evolución de la demanda peninsular y balances de interconexiones e intercambios internacionales</p>
+        </div>
+        <div class="chart-grid chart-grid-2" style="margin-bottom:32px;">
+            <div class="chart-card">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Demanda Diaria</div>
+                        <div class="chart-subtitle">MWh totales por día</div>
+                    </div>
+                    <div class="chart-badge">MWh</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartDemanda" height="150"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Saldo Interconexiones</div>
+                        <div class="chart-subtitle">Intercambios netos internacionales</div>
+                    </div>
+                    <div class="chart-badge">MWh</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartSaldo" height="150"></canvas></div>
+            </div>
+        </div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Mix de Generación</div>
+            <h2>Estructura de la Generación Eléctrica</h2>
+            <p>Contribución acumulada de cada tecnología durante el período analizado</p>
+        </div>
+        <div class="chart-grid chart-grid-3" style="margin-bottom:32px;">
+            <div class="chart-card">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Generación por Tecnología — Evolución</div>
+                        <div class="chart-subtitle">Principales fuentes diarias en MWh</div>
+                    </div>
+                    <div class="chart-badge">Apilado</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartGenStack" height="140"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Distribución Total</div>
+                        <div class="chart-subtitle">% sobre generación total acumulada</div>
+                    </div>
+                    <div class="chart-badge">Donut</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartDonut" height="200"></canvas></div>
+            </div>
+        </div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Energías Renovables</div>
+            <h2>Solar y Eólica — Evolución Diaria</h2>
+            <p>Comparación de la generación fotovoltaica, solar térmica y eólica a lo largo del período</p>
+        </div>
+        <div class="chart-grid" style="margin-bottom:32px;">
+            <div class="chart-card full">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Eólica · Solar FV · Solar Térmica · Hidráulica</div>
+                        <div class="chart-subtitle">MWh diarios por fuente renovable</div>
+                    </div>
+                    <div class="chart-badge">Renovables</div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartRenovables" height="90"></canvas></div>
+            </div>
+        </div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Resumen por Fuente</div>
+            <h2>Generación Total Acumulada</h2>
+            <p>Total acumulado por tecnología en el mes de
+                MAYO                2026            </p>
+        </div>
+        <div class="mix-grid" id="mix-grid"></div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Almacenamiento &amp; Flexibilidad</div>
+            <h2>Baterías &amp; Bombeo Hidráulico</h2>
+            <p>Gestión del almacenamiento energético durante el período</p>
+        </div>
+        <div class="chart-grid chart-grid-2" style="margin-bottom:32px;">
+            <div class="chart-card">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Consumo Bombeo Hidráulico</div>
+                        <div class="chart-subtitle">MWh de consumo diario para bombeo</div>
+                    </div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartBombeo" height="160"></canvas></div>
+            </div>
+            <div class="chart-card">
+                <div class="chart-head">
+                    <div>
+                        <div class="chart-title">Carga y Entrega de Baterías</div>
+                        <div class="chart-subtitle">MWh diarios de carga vs entrega</div>
+                    </div>
+                </div>
+                <div class="chart-wrapper"><canvas id="chartBaterias" height="160"></canvas></div>
+            </div>
+        </div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Tabla de Datos</div>
+            <h2>Resumen Estadístico por Variable</h2>
+            <p>Valores mínimos, máximos, medias y totales acumulados del período</p>
+        </div>
+        <div class="table-wrap">
+            <table id="summary-table"></table>
+        </div>
+
+        
+        <div class="section-head">
+            <div class="section-title">Análisis &amp; Conclusiones</div>
+            <h2>Insights del Período</h2>
+            <p>Principales observaciones del comportamiento del mercado en
+                MAYO                2026            </p>
+        </div>
+        <div class="insights-grid" id="insights-grid"></div>
+
+    </main>
+
+    
+    <footer>
+        <div class="footer-logo">⚡ PowerTrader EnergyVision</div>
+        <div>Informe Mensual ·
+            MAYO            2026 · Datos: OMIE / REE · Generado automáticamente
+        </div>
+    </footer>
+
+    
+    <script>
+        
+        const data = {"omie": [57.874583333333334, 43.635, 48.12958333333333, 69.7084375, 64.34135416666666, 78.02427083333333, 86.89687500000001, 64.68416666666667, 33.7971875, 20.844791666666666, 52.65947916666667, 69.23333333333333, 48.2615625, 53.339479166666656, 37.728541666666665, 41.777499999999996, 45.81489583333334, 60.71541666666666, 45.85374999999999, 56.03156250000001, 57.75447916666667, 56.13510416666667, 36.52166666666667, 26.31625, 31.716041666666666, 60.366770833333334, 71.44197916666667, 74.98364583333334, 79.59270833333333, 62.31666666666666, 44.490312499999995], "demanda": [557689.93, 571216.36, 551594.85, 651094.15, 664677.1, 665277.71, 672155.35, 678173.96, 616223.85, 563139.27, 655326.62, 679582.3, 678435.54, 673945.06, 676020.53, 591663.09, 556087.63, 653394.42, 667781.47, 673835.44, 678727.89, 680190.9, 611302.78, 572134.53, 680736.05, 708443.11, 719466.71, 731389.94, 734442.99, 658524.65, 617264.56], "saldo": [-33563.096000000005, -25109.906, -21074.229000000003, -43496.345, -54574.327999999994, -56147.199, -54824.471000000005, -18585.687, 21071.721999999998, -1163.7610000000022, -21809.706000000002, -30219.089999999997, -40515.151999999995, -51085.090000000004, -69412.615, -86158.65599999999, -47265.24999999999, -64438.942, -67094.734, -53331.388999999996, -67311.61600000001, -76845.17, -56295.665, -42897.227000000006, -43816.642, -69625.40800000001, -37385.231999999996, -33968.462, -57853.773, -40496.981, -46649.427], "baleares": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "bombeo": [-17051.4014, -14353.9176, -15566.9426, -25462.2346, -22766.1214, -23191.0448, -26061.9656, -22948.9172, -14673.617199999999, -12885.389, -19850.542800000003, -23639.9108, -18133.0116, -17275.0776, -16125.757999999998, -17901.5364, -17978.8092, -21298.2484, -19593.587199999998, -20187.442000000003, -18840.9694, -19557.3114, -15573.9078, -11768.2796, -14854.84, -18833.5598, -19857.4068, -19624.649, -22627.9284, -17763.079400000002, -12212.4508], "cargaBat": [-155, -130, -141, -231, -206, -210, -236, -208, -133, -117, -180, -214, -164, -157, -146, -162, -163, -193, -178, -183, -171, -177, -141, -106, -135, -171, -180, -178, -205, -161, -111], "entregaBat": [31, 26, 28, 46, 41, 42, 47, 41, 26, 23, 36, 42, 32, 31, 29, 32, 32, 38, 35, 36, 34, 35, 28, 21, 27, 34, 36, 35, 41, 32, 22], "hibrid": [1937, 1631, 1768, 2893, 2587, 2635, 2961, 2607, 1667, 1464, 2255, 2686, 2060, 1963, 1832, 2034, 2043, 2420, 2226, 2294, 2141, 2222, 1769, 1337, 1688, 2140, 2256, 2230, 2571, 2018, 1387], "pvpc": [100.38208333333334, 89.81916666666666, 96.80708333333332, 142.3, 137.53083333333333, 143.065, 143.25458333333333, 135.66625, 82.75541666666668, 83.72791666666667, 135.69958333333332, 138.85, 130.02541666666667, 132.46625, 130.84625, 89.62291666666665, 96.3975, 141.83, 135.75458333333333, 140.1625, 138.31125, 139.78875, 82.73083333333334, 87.88666666666667, 126.97041666666667, 139.15041666666667, 141.78875, 144.93375, 145.745, 96.17666666666666, 89.00708333333334], "nuclear": [121214.45, 120820.22, 120844.61, 120902.81, 120892.11, 120751.11, 120824.22, 114354.06, 96713.3, 94866.65, 96634.88, 96582.83, 96635.32, 99248.56, 107023.45, 110415.04, 121167.62, 134021.88, 141735.21, 145469.06, 145286.36, 145365.1, 145344.75, 145379.9, 145305.51, 125006.8, 121271.31, 121199.9, 121103.25, 121030.64, 121155.09], "hidUGH": [67043.01005, 56436.9942, 61206.387950000004, 100112.87694999999, 89512.25004999999, 91182.97159999999, 102470.9102, 90230.9699, 57693.9949, 50663.00675, 78048.72510000001, 92947.8311, 71295.7047, 67922.4642, 63403.5485, 70385.5863, 70689.4089, 83740.8403, 77038.4224, 79373.3515, 74079.26605, 76895.79255, 61233.773850000005, 46270.7357, 58406.53, 74050.13285, 78075.71310000001, 77160.55175, 88968.9003, 69841.19855, 48017.136099999996], "hidNoUGH": [10463.35995, 8808.0858, 9552.442050000001, 15624.55305, 13970.11995, 14230.868400000001, 15992.569800000001, 14082.2901, 9004.2651, 7906.94325, 12181.014900000002, 14506.3089, 11127.0753, 10600.615800000001, 9895.3515, 10985.0337, 11032.4511, 13069.379700000001, 12023.3376, 12387.748500000002, 11561.503950000002, 12001.07745, 9556.716150000002, 7221.4443, 9115.470000000001, 11556.95715, 12185.226900000001, 12042.39825, 13885.319700000002, 10900.071450000001, 7494.003900000001], "turbBom": [7750.637, 6524.508000000001, 7075.883000000001, 11573.743, 10348.237000000001, 10541.384, 11846.348, 10431.326000000001, 6669.826, 5856.995, 9022.974, 10745.414, 8242.278, 7852.308000000001, 7329.889999999999, 8137.062, 8172.186000000001, 9681.022, 8906.176, 9176.11, 8564.077000000001, 8889.687, 7079.049000000001, 5349.218000000001, 6752.200000000001, 8560.709, 9026.094000000001, 8920.295, 10285.422, 8074.127, 5551.1140000000005], "ccomb": [103147.43, 84893.99, 99644.01, 120343.59, 113377.52, 114072.53, 123257.57, 102388.38, 72473.92, 75655.79, 98987.02, 105876.2, 93622.66, 84339.91, 87630.07, 84183.44, 86851.82, 108042.37, 92565.08, 102803.35, 106119.23, 105378.8, 70093.57, 73213.58, 85838.19, 117629.38, 128427.8, 123344.02, 137622.15, 106718.72, 92021.99], "eolica": [68561.41, 143785.29, 74896.89, 84723.96, 91462.42, 65336.67, 89590.23, 110704.26, 174068.2, 152993.77, 101880.62, 118097.6, 161617.79, 172235.06, 242554.68, 118589.58, 69587.92, 89967.5, 107776.7, 63017.48, 94002.68, 104883.21, 113842.41, 122256.54, 135979.56, 108119.4, 78173.88, 73544.68, 64188.24, 74630.42, 113963.34], "cogen": [34630.51, 34197.98, 33744.57, 37484.24, 37943.16, 39501.21, 41668.85, 41054.26, 35340.15, 30608.75, 38673.53, 40530.33, 38658.77, 38853.49, 34368.43, 32784.77, 33755.13, 38997.58, 36380.43, 37285.76, 35995.15, 37012.45, 33026.73, 29945.53, 31017.41, 36412.08, 37322.9, 38326.4, 38115.73, 34889.86, 33016.23], "residuos": [4644.85, 4823.52, 4468.49, 3797.5099999999998, 3427.41, 3729.8900000000003, 3570.03, 4202.97, 4145.33, 4040.7400000000002, 4135.2, 3671.6899999999996, 3330.92, 3488.7200000000003, 4156.74, 4535.29, 3964.92, 3920.1499999999996, 4355.32, 3448.78, 3998.96, 3875.34, 3691.25, 3789.92, 3560.85, 3632.76, 3901.96, 4050.41, 4090.55, 4130.57, 3829.7], "otrasRen": [9644.53, 9750.01, 10016.82, 9587.56, 9136.17, 9241.51, 9800.54, 10000.37, 9624.67, 9540.31, 9665.48, 9978.62, 8676.08, 10297.69, 10324.57, 10662.44, 10644.82, 10764.85, 10569.04, 9238.91, 10169.13, 9670.33, 9556.19, 9882.69, 9612.27, 9932.68, 10479.91, 11838.37, 12645.17, 12865.86, 12453.88], "solarFV": [156559.49, 125690.81, 147629.01, 172377.19, 206351.1, 227969.08, 186611.35, 183085.09, 128144.09, 140041.44, 209919.66, 194100.52, 205397.27, 207705.46, 171456.99, 213010.82, 184293.84, 202602.97, 211538.73, 233012.09, 224418.16, 222788.94, 200921.63, 172481.43, 216684.04, 249606.95, 244528.92, 260421.21, 269391.81, 238480.93, 222143.4], "solarTerm": [15675.89, 3182.04, 5663.36, 12650.99, 18553.05, 19362.8, 13279.38, 8683.94, 2180.28, 2460.61, 9457.17, 11160.95, 15116.95, 18871.5, 16017.28, 21594.74, 15509.9, 16124.92, 23733.5, 23939.22, 22303.22, 21482.12, 21215.93, 14980.43, 17803.48, 20860.64, 23113.48, 26122.27, 26135.95, 24696.21, 23061.36]};
+        const labels = Array.from({ length: data.omie.length }, (_, i) => String(i + 1).padStart(2, '0'));
+
+        
+        const sum = arr => arr.reduce((a, b) => a + b, 0);
+        const avg = arr => sum(arr) / arr.length;
+        const min = arr => Math.min(...arr);
+        const max = arr => Math.max(...arr);
+        const fmt = (n, d = 0) => n.toLocaleString('es-ES', { minimumFractionDigits: d, maximumFractionDigits: d });
+        const fmtK = n => Math.abs(n) >= 1000 ? (n / 1000).toFixed(1) + 'K' : n.toFixed(0);
+
+        
+        Chart.defaults.color = '#64748b';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.05)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
+
+        const makeGrad = (ctx, c1, c2) => {
+            const g = ctx.createLinearGradient(0, 0, 0, 300);
+            g.addColorStop(0, c1); g.addColorStop(1, c2); return g;
+        };
+
+        const baseOptions = (yLabel = '') => ({
+            responsive: true,
+            maintainAspectRatio: true,
+            interaction: { intersect: false, mode: 'index' },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    backgroundColor: 'rgba(13,20,32,0.95)',
+                    borderColor: 'rgba(0,212,255,0.3)', borderWidth: 1,
+                    titleColor: '#94a3b8', bodyColor: '#e2e8f0',
+                    padding: 12, callbacks: {
+                        label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.raw, ctx.raw < 10 ? 2 : 0)}`
+                    }
+                }
+            },
+            scales: {
+                x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { font: { size: 11 } } },
+                y: {
+                    grid: { color: 'rgba(255,255,255,0.04)' },
+                    ticks: { font: { size: 11 }, callback: v => fmtK(v) },
+                    title: { display: !!yLabel, text: yLabel, color: '#475569', font: { size: 10 } }
+                }
+            }
+        });
+
+        
+        const minOmieDay = data.omie.indexOf(min(data.omie)) + 1;
+        const kpis = [
+            { label: 'Precio Medio OMIE', value: fmt(avg(data.omie), 2), unit: '€/MWh', trend: `Mín: ${fmt(min(data.omie), 2)} · Máx: ${fmt(max(data.omie), 2)}`, dir: 'neutral', color: '#00d4ff' },
+            { label: 'Precio Medio PVPC', value: fmt(avg(data.pvpc), 2), unit: '€/MWh', trend: `Mín: ${fmt(min(data.pvpc), 2)} · Máx: ${fmt(max(data.pvpc), 2)}`, dir: 'neutral', color: '#7c3aed' },
+            { label: 'Demanda Media Diaria', value: fmt(avg(data.demanda) / 1000, 1), unit: 'GWh/día', trend: `Total: ${fmt(sum(data.demanda) / 1000, 0)} GWh`, dir: 'neutral', color: '#f59e0b' },
+            { label: 'Generación Eólica Total', value: fmt(sum(data.eolica) / 1000, 0), unit: 'GWh acum.', trend: `Media: ${fmt(avg(data.eolica) / 1000, 1)} GWh/día`, dir: 'up', color: '#10b981' },
+            { label: 'Generación Solar FV Total', value: fmt(sum(data.solarFV) / 1000, 0), unit: 'GWh acum.', trend: `Media: ${fmt(avg(data.solarFV) / 1000, 1)} GWh/día`, dir: 'up', color: '#f59e0b' },
+            { label: 'Nuclear Total', value: fmt(sum(data.nuclear) / 1000, 0), unit: 'GWh acum.', trend: `Media: ${fmt(avg(data.nuclear) / 1000, 1)} GWh/día`, dir: 'neutral', color: '#6366f1' },
+            { label: 'Ciclo Combinado Total', value: fmt(sum(data.ccomb) / 1000, 0), unit: 'GWh acum.', trend: `Media: ${fmt(avg(data.ccomb) / 1000, 1)} GWh/día`, dir: 'down', color: '#ef4444' },
+            { label: 'Día Precio OMIE Mínimo', value: `Día ${String(minOmieDay).padStart(2, '0')}`, unit: `${fmt(min(data.omie), 2)} €/MWh`, trend: 'Mínimo histórico del período', dir: 'up', color: '#00d4ff' },
+        ];
+
+        const kpiGrid = document.getElementById('kpi-grid');
+        kpis.forEach(k => {
+            kpiGrid.innerHTML += `
+  <div class="kpi-card" style="--kpi-color:${k.color}">
+    <div class="kpi-label">${k.label}</div>
+    <div class="kpi-value">${k.value}</div>
+    <div class="kpi-unit">${k.unit}</div>
+    <div class="kpi-trend ${k.dir}">${k.dir === 'up' ? '▲' : k.dir === 'down' ? '▼' : '•'} ${k.trend}</div>
+  </div>`;
+        });
+
+        // ────────────────────────────────── CHART: Precios
+        (function () {
+            const ctx = document.getElementById('chartPrecios').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        {
+                            label: 'PVPC', data: data.pvpc,
+                            borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.05)',
+                            borderWidth: 2.5, tension: 0.4, fill: true, pointRadius: 3,
+                            pointHoverRadius: 6, yAxisID: 'y'
+                        },
+                        {
+                            label: 'OMIE Spot', data: data.omie,
+                            borderColor: '#00d4ff', backgroundColor: 'rgba(0,212,255,0.06)',
+                            borderWidth: 2.5, tension: 0.4, fill: true, pointRadius: 3,
+                            pointHoverRadius: 6, yAxisID: 'y'
+                        }
+                    ]
+                },
+                options: {
+                    ...baseOptions(),
+                    plugins: {
+                        ...baseOptions().plugins,
+                        legend: {
+                            display: true,
+                            labels: { color: '#94a3b8', font: { size: 12 }, boxWidth: 12, padding: 20 }
+                        },
+                        tooltip: {
+                            ...baseOptions().plugins.tooltip,
+                            callbacks: {
+                                label: ctx => ` ${ctx.dataset.label}: ${fmt(ctx.raw, 2)} €/MWh`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { font: { size: 11 } } },
+                        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + '€' } }
+                    }
+                }
+            });
+        })();
+
+        
+        (function () {
+            const ctx = document.getElementById('chartDemanda').getContext('2d');
+            const grad = makeGrad(ctx, 'rgba(245,158,11,0.25)', 'rgba(245,158,11,0.01)');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Demanda', data: data.demanda.map(v => v / 1000),
+                        borderColor: '#f59e0b', backgroundColor: grad,
+                        borderWidth: 2.5, tension: 0.4, fill: true, pointRadius: 0
+                    }]
+                },
+                options: baseOptions('GWh')
+            });
+        })();
+
+        
+        (function () {
+            const ctx = document.getElementById('chartSaldo').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Saldo Interconexi.', data: data.saldo.map(v => v / 1000),
+                        backgroundColor: data.saldo.map(v => v >= 0 ? 'rgba(16,185,129,0.6)' : 'rgba(239,68,68,0.55)'),
+                        borderColor: data.saldo.map(v => v >= 0 ? '#10b981' : '#ef4444'),
+                        borderWidth: 1, borderRadius: 3
+                    }]
+                },
+                options: {
+                    ...baseOptions('GWh'),
+                    scales: {
+                        x: { grid: { color: 'rgba(255,255,255,0.04)' } },
+                        y: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { callback: v => v + 'GWh' } }
+                    }
+                }
+            });
+        })();
+
+        
+        (function () {
+            const ctx = document.getElementById('chartGenStack').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Eólica', data: data.eolica.map(v => v / 1000), backgroundColor: 'rgba(16,185,129,0.75)', stack: 'gen' },
+                        { label: 'Solar FV', data: data.solarFV.map(v => v / 1000), backgroundColor: 'rgba(245,158,11,0.75)', stack: 'gen' },
+                        { label: 'Nuclear', data: data.nuclear.map(v => v / 1000), backgroundColor: 'rgba(99,102,241,0.75)', stack: 'gen' },
+                        { label: 'Hid. UGH', data: data.hidUGH.map(v => v / 1000), backgroundColor: 'rgba(0,212,255,0.65)', stack: 'gen' },
+                        { label: 'C. Combinado', data: data.ccomb.map(v => v / 1000), backgroundColor: 'rgba(239,68,68,0.65)', stack: 'gen' },
+                        { label: 'Cogeneración', data: data.cogen.map(v => v / 1000), backgroundColor: 'rgba(251,191,36,0.60)', stack: 'gen' },
+                        { label: 'Otras', data: data.otrasRen.map(v => v / 1000), backgroundColor: 'rgba(148,163,184,0.50)', stack: 'gen' },
+                    ]
+                },
+                options: {
+                    ...baseOptions('GWh'),
+                    plugins: {
+                        ...baseOptions().plugins,
+                        legend: {
+                            display: true, position: 'bottom',
+                            labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10, padding: 10 }
+                        }
+                    }
+                }
+            });
+        })();
+
+        
+        (function () {
+            const totals = {
+                'Eólica': sum(data.eolica),
+                'Solar FV': sum(data.solarFV),
+                'Nuclear': sum(data.nuclear),
+                'Hid. UGH': sum(data.hidUGH),
+                'C. Combinado': sum(data.ccomb),
+                'Hid. No UGH': sum(data.hidNoUGH),
+                'Cogeneración': sum(data.cogen),
+                'Turbinación': sum(data.turbBom),
+                'Solar Térm.': sum(data.solarTerm),
+                'Otras Renov.': sum(data.otrasRen),
+                'Residuos': sum(data.residuos),
+                'Hibridación': sum(data.hibrid),
+            };
+            const cols = ['#10b981', '#f59e0b', '#6366f1', '#00d4ff', '#ef4444', '#0ea5e9', '#fbbf24', '#22d3ee', '#fb923c', '#a3e635', '#e879f9', '#facc15'];
+            const ctx = document.getElementById('chartDonut').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(totals),
+                    datasets: [{ data: Object.values(totals), backgroundColor: cols, borderColor: '#0d1420', borderWidth: 2 }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: true, cutout: '60%',
+                    plugins: {
+                        legend: {
+                            display: true, position: 'bottom',
+                            labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10, padding: 8 }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(13,20,32,0.95)',
+                            borderColor: 'rgba(0,212,255,0.3)', borderWidth: 1,
+                            callbacks: {
+                                label: ctx => {
+                                    const tot = Object.values(totals).reduce((a, b) => a + b, 0);
+                                    return ` ${ctx.label}: ${(ctx.raw / tot * 100).toFixed(1)}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+
+        
+        (function () {
+            const ctx = document.getElementById('chartRenovables').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Eólica', data: data.eolica.map(v => v / 1000), borderColor: '#10b981', backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.4, pointRadius: 2 },
+                        { label: 'Solar FV', data: data.solarFV.map(v => v / 1000), borderColor: '#f59e0b', backgroundColor: 'transparent', borderWidth: 2.5, tension: 0.4, pointRadius: 2 },
+                        { label: 'Solar Térmica', data: data.solarTerm.map(v => v / 1000), borderColor: '#fb923c', backgroundColor: 'transparent', borderWidth: 1.5, tension: 0.4, pointRadius: 2 },
+                        { label: 'Hid. UGH', data: data.hidUGH.map(v => v / 1000), borderColor: '#00d4ff', backgroundColor: 'transparent', borderWidth: 2, tension: 0.4, pointRadius: 2, borderDash: [4, 3] },
+                    ]
+                },
+                options: {
+                    ...baseOptions('GWh'),
+                    plugins: {
+                        ...baseOptions().plugins,
+                        legend: { display: true, labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 12, padding: 16 } }
+                    }
+                }
+            });
+        })();
+
+        
+        (function () {
+            const ctx = document.getElementById('chartBombeo').getContext('2d');
+            const grad = makeGrad(ctx, 'rgba(99,102,241,0.3)', 'rgba(99,102,241,0.02)');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Consumo Bombeo', data: data.bombeo.map(v => Math.abs(v) / 1000), borderColor: '#6366f1', backgroundColor: grad, borderWidth: 2, fill: true, tension: 0.4 },
+                        { label: 'Turbinación Bombeo', data: data.turbBom.map(v => v / 1000), borderColor: '#22d3ee', backgroundColor: 'transparent', borderWidth: 2, tension: 0.4 }
+                    ]
+                },
+                options: {
+                    ...baseOptions('GWh'),
+                    plugins: { ...baseOptions().plugins, legend: { display: true, labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10 } } }
+                }
+            });
+        })();
+
+        
+        (function () {
+            const ctx = document.getElementById('chartBaterias').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [
+                        { label: 'Carga Baterías', data: data.cargaBat.map(v => Math.abs(v)), backgroundColor: 'rgba(239,68,68,0.6)', borderColor: '#ef4444', borderWidth: 1, borderRadius: 3 },
+                        { label: 'Entrega Baterías', data: data.entregaBat, backgroundColor: 'rgba(16,185,129,0.6)', borderColor: '#10b981', borderWidth: 1, borderRadius: 3 },
+                    ]
+                },
+                options: {
+                    ...baseOptions('MWh'),
+                    plugins: { ...baseOptions().plugins, legend: { display: true, labels: { color: '#94a3b8', font: { size: 10 }, boxWidth: 10 } } }
+                }
+            });
+        })();
+
+        
+        const mixSources = [
+            { name: 'Eólica', total: sum(data.eolica), color: '#10b981' },
+            { name: 'Solar FV', total: sum(data.solarFV), color: '#f59e0b' },
+            { name: 'Nuclear', total: sum(data.nuclear), color: '#6366f1' },
+            { name: 'Hid. UGH', total: sum(data.hidUGH), color: '#00d4ff' },
+            { name: 'C. Combinado', total: sum(data.ccomb), color: '#ef4444' },
+            { name: 'Hid. No UGH', total: sum(data.hidNoUGH), color: '#0ea5e9' },
+            { name: 'Cogeneración', total: sum(data.cogen), color: '#fbbf24' },
+            { name: 'Turbinación B.', total: sum(data.turbBom), color: '#22d3ee' },
+            { name: 'Solar Térmica', total: sum(data.solarTerm), color: '#fb923c' },
+            { name: 'Otras Renov.', total: sum(data.otrasRen), color: '#a3e635' },
+            { name: 'Residuos', total: sum(data.residuos), color: '#e879f9' },
+            { name: 'Hibridación', total: sum(data.hibrid), color: '#facc15' },
+        ];
+        const totalGen = mixSources.reduce((a, b) => a + b.total, 0);
+        const mixGrid = document.getElementById('mix-grid');
+        mixSources.sort((a, b) => b.total - a.total).forEach(s => {
+            const pct = (s.total / totalGen * 100).toFixed(1);
+            const bar = Math.round(s.total / totalGen * 100);
+            mixGrid.innerHTML += `
+  <div class="mix-card" style="--src-color:${s.color}">
+    <div class="mix-src">${s.name}</div>
+    <div class="mix-total">${fmt(s.total / 1000, 0)}<span class="mix-unit"> GWh</span></div>
+    <div class="mix-pct">${pct}% del total</div>
+    <div class="mix-bar-bg"><div class="mix-bar" style="width:${bar}%"></div></div>
+  </div>`;
+        });
+
+        
+        const tableData = [
+            { name: 'OMIE Spot (€/MWh)', arr: data.omie, fmt: 2, unit: '€/MWh', isPrice: true },
+            { name: 'PVPC (€/MWh)', arr: data.pvpc, fmt: 2, unit: '€/MWh', isPrice: true },
+            { name: 'Demanda (GWh)', arr: data.demanda.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'Saldo Interconnec. (GWh)', arr: data.saldo.map(v => v / 1000), fmt: 1, unit: 'GWh' },
+            { name: 'Eólica (GWh)', arr: data.eolica.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'Solar FV (GWh)', arr: data.solarFV.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'Solar Térmica (GWh)', arr: data.solarTerm.map(v => v / 1000), fmt: 1, unit: 'GWh' },
+            { name: 'Nuclear (GWh)', arr: data.nuclear.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'Hid. UGH (GWh)', arr: data.hidUGH.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'C. Combinado (GWh)', arr: data.ccomb.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'Cogeneración (GWh)', arr: data.cogen.map(v => v / 1000), fmt: 0, unit: 'GWh' },
+            { name: 'Bombeo (GWh)', arr: data.bombeo.map(v => v / 1000), fmt: 1, unit: 'GWh' },
+        ];
+        const tbl = document.getElementById('summary-table');
+        tbl.innerHTML = `<thead><tr>
+  <th>Variable</th>
+  <th>Mínimo</th><th>Máximo</th><th>Media</th><th>Total Acum.</th>
+</tr></thead><tbody>`;
+        tableData.forEach(r => {
+            const mn = min(r.arr), mx = max(r.arr), av = avg(r.arr), tot = sum(r.arr);
+            const hasTot = !r.isPrice;
+            tbl.innerHTML += `<tr>
+    <td>${r.name}</td>
+    <td class="${mn < 0 ? 'td-negative' : ''}">${fmt(mn, r.fmt)}</td>
+    <td>${fmt(mx, r.fmt)}</td>
+    <td>${fmt(av, r.fmt)}</td>
+    <td>${hasTot ? fmt(tot, r.fmt) : '—'}</td>
+  </tr>`;
+        });
+        tbl.innerHTML += '</tbody>';
+
+        // ────────────────────────────────── INSIGHTS (auto-generated from data)
+        const omieAvg = avg(data.omie);
+        const renovPct = ((sum(data.eolica) + sum(data.solarFV) + sum(data.solarTerm) + sum(data.hidUGH) + sum(data.hidNoUGH) + sum(data.otrasRen)) / totalGen * 100).toFixed(1);
+        const minOmieDayIdx = data.omie.indexOf(min(data.omie));
+        const maxEolicaDay = data.eolica.indexOf(max(data.eolica)) + 1;
+        const maxSolarDay = data.solarFV.indexOf(max(data.solarFV)) + 1;
+        const minSaldoIdx = data.saldo.indexOf(min(data.saldo));
+        const impDays = data.saldo.filter(v => v < 0).length;
+
+        const insights = [
+            {
+                icon: '📉',
+                title: `Precio OMIE medio: ${fmt(omieAvg, 2)} €/MWh`,
+                text: `El precio medio del mercado mayorista fue de ${fmt(omieAvg, 2)} €/MWh, con un mínimo de ${fmt(min(data.omie), 2)} €/MWh el día ${minOmieDay} y un máximo de ${fmt(max(data.omie), 2)} €/MWh. Los precios bajos coinciden con alta generación renovable.`,
+                tag: 'tag-blue', tagTxt: 'Mercado Mayorista'
+            },
+            {
+                icon: '💨',
+                title: `Eólica — Máx: ${fmt(max(data.eolica) / 1000, 0)} GWh (día ${maxEolicaDay})`,
+                text: `La energía eólica registró valores máximos de ${fmt(max(data.eolica) / 1000, 0)} GWh el día ${maxEolicaDay}. La generación media fue de ${fmt(avg(data.eolica) / 1000, 0)} GWh/día, con mínimos de ${fmt(min(data.eolica) / 1000, 0)} GWh.`,
+                tag: 'tag-green', tagTxt: 'Eólica'
+            },
+            {
+                icon: '☀️',
+                title: `Solar FV — Máx: ${fmt(max(data.solarFV) / 1000, 0)} GWh (día ${maxSolarDay})`,
+                text: `La solar fotovoltaica marcó su récord el día ${maxSolarDay} con ${fmt(max(data.solarFV) / 1000, 0)} GWh. La solar térmica acumuló ${fmt(sum(data.solarTerm) / 1000, 0)} GWh en el período.`,
+                tag: 'tag-yellow', tagTxt: 'Solar'
+            },
+            {
+                icon: '🌍',
+                title: `Saldo importador: ${impDays} días de ${data.saldo.length}`,
+                text: `España fue importadora neta en ${impDays} de ${data.saldo.length} días del período. El mayor déficit se registró el día ${minSaldoIdx + 1} (${fmt(data.saldo[minSaldoIdx] / 1000, 1)} GWh neto).`,
+                tag: 'tag-red', tagTxt: 'Interconexiones'
+            },
+            {
+                icon: '⚡',
+                title: `Penetración renovable: ${renovPct}%`,
+                text: `Las energías renovables (eólica, solar FV, térmica, hidráulica y otras) cubrieron el ${renovPct}% de la generación total acumulada del período, confirmando el fuerte avance de la descarbonización del sistema eléctrico español.`,
+                tag: 'tag-green', tagTxt: 'Descarbonización'
+            },
+            {
+                icon: '🔋',
+                title: `Bombeo — Consumo total: ${fmt(sum(data.bombeo.map(v => Math.abs(v))) / 1000, 0)} GWh`,
+                text: `El bombeo hidráulico consumió ${fmt(sum(data.bombeo.map(v => Math.abs(v))) / 1000, 0)} GWh aprovechando precios bajos, mientras que la turbinación generó ${fmt(sum(data.turbBom) / 1000, 0)} GWh. Las baterías registraron actividad continua de arbitraje.`,
+                tag: 'tag-blue', tagTxt: 'Almacenamiento'
+            },
+        ];
+
+        const insGrid = document.getElementById('insights-grid');
+        insights.forEach(i => {
+            insGrid.innerHTML += `
+  <div class="insight-card">
+    <div class="insight-icon">${i.icon}</div>
+    <div class="insight-title">${i.title}</div>
+    <div class="insight-text">${i.text}</div>
+    <span class="insight-tag ${i.tag}">${i.tagTxt}</span>
+  </div>`;
+        });
+    </script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"cb7f9464c8b94249b547b6dea5a8c95b","r":1}' crossorigin="anonymous"></script>
+</body>
+
+</html>
+
